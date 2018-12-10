@@ -1,0 +1,6 @@
+__pycache__/
+.idea/
+*.xml
+*.json
+*.py[cod]
+db.sqlite3
