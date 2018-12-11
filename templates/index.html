@@ -22,5 +22,11 @@
       {% endif %}
       <hr>
     </header>
+   {% if user.is_authenticated %}
+    <section>
+        <h2>Wallets</h2>
+        {% for wallet in user.wallet.all %} <button> {{ wallet }} <br> {{ wallet.created }}</button> {% endfor %}
+    </section>
+    {% endif %}
 </body>
 </html>

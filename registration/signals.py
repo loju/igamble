@@ -8,7 +8,7 @@ UserModel = get_user_model()
 
 
 @receiver(post_save, sender=UserModel)
-def user_creation_handler(sender, instance, **kwargs):
+def user_creation_handler(sender, instance, created, **kwargs):
     """
     :param sender: user model class
     :param instance: user object
@@ -16,8 +16,9 @@ def user_creation_handler(sender, instance, **kwargs):
     Signal creates two wallets for initial purposes - one with real money
     and additional one with bonus
     """
-    for wallet_type in settings.WALLET_TYPE:
-        instance.wallet.create(wallet_type=wallet_type[0])
+    if created:
+        for wallet_type in settings.WALLET_TYPE:
+            instance.wallet.create(wallet_type=wallet_type[0])
 
 
 def append_bonus_after_login(sender, user, request, **kwargs):

@@ -20,12 +20,12 @@ class WalletModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-created']
+        ordering = ['-wallet_type', 'created']
         verbose_name = 'Wallet'
         verbose_name_plural = 'Wallets'
 
     def __str__(self):
-        return self.user.username
+        return '{0}: {1}'.format(self.get_wallet_type_display(), self.value)
 
     # def clean(self):
     #     # TODO: put here validation rules for wallet
