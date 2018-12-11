@@ -12,11 +12,8 @@ class WalletModelClassTest(TestCase):
     def setUpTestData(cls):
         cls.user = UserModel.objects.create_user(username='John', password='secret')
 
-    def test_wallet_creation(self):
+    def test_wallet_object_creation(self):
         wallet = WalletModel(user=self.user, wallet_type='R', value=300)
         self.assertEqual(wallet.value, 300)
         self.assertEqual(wallet.get_wallet_type_display(), 'Real Money EUR')
         self.assertEqual(wallet.user.username, 'John')
-
-    def test_clean(self):
-        raise NotImplementedError
