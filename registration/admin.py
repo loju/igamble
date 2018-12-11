@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import BonusForLoginModel, BonusForDepositModel
+
+
+admin.site.register(BonusForLoginModel)
+admin.site.register(BonusForDepositModel)
