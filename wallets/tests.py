@@ -17,3 +17,12 @@ class WalletModelClassTest(TestCase):
         self.assertEqual(wallet.value, 300)
         self.assertEqual(wallet.get_wallet_type_display(), 'Real Money EUR')
         self.assertEqual(wallet.user.username, 'John')
+
+
+class WalletSignalsTest(TestCase):
+
+    def test_creation_wallets_when_user_is_created(self):
+        user = UserModel.objects.create_user(username='Jon', password='secret')
+        self.assertEqual(WalletModel.objects.filter(user=user).count(), 2)
+        self.assertEqual(WalletModel.objects.filter(user=user, wallet_type='R').count(), 1)
+        self.assertEqual(WalletModel.objects.filter(user=user, wallet_type='B').count(), 1)
