@@ -30,3 +30,7 @@ class WalletModel(models.Model):
 
     def __str__(self):
         return self.user
+
+    def clean(self):
+        # TODO: put here validation rules for wallet
+        raise NotImplementedError
