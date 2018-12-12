@@ -6,6 +6,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
+from .managers import WalletManager
+
 UserModel = get_user_model()
 
 
@@ -18,6 +20,8 @@ class WalletModel(models.Model):
     wallet_type = models.CharField(max_length=1, choices=settings.WALLET_TYPE)
     value = models.PositiveSmallIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
+
+    objects = WalletManager()
 
     class Meta:
         ordering = ['-wallet_type', 'created']
