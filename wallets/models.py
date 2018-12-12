@@ -5,6 +5,7 @@ Wallet Models for User
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.core.validators import MinValueValidator
 
 from .managers import WalletManager
 
@@ -14,7 +15,7 @@ UserModel = get_user_model()
 class TimeStampedValueModel(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
-    value = models.PositiveSmallIntegerField(default=0)
+    value = models.PositiveSmallIntegerField(default=0, validators=[MinValueValidator(1)])
 
     class Meta:
         abstract = True
@@ -50,6 +51,7 @@ class DepositModel(TimeStampedValueModel):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='deposit')
 
     class Meta:
+        ordering = ['-created']
         verbose_name = 'Deposit'
         verbose_name_plural = 'Deposits'
 
