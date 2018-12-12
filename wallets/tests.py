@@ -1,7 +1,7 @@
-from django.test import Client, TestCase
+from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from .models import WalletModel
+from .models import DepositModel, WalletModel
 
 UserModel = get_user_model()
 
@@ -13,7 +13,7 @@ class WalletModelClassTest(TestCase):
         cls.user = UserModel.objects.create_user(username='John', password='secret')
 
     def test_wallet_object_creation(self):
-        wallet = WalletModel(user=self.user, wallet_type='R', value=300)
+        wallet = WalletModel.objects.create(user=self.user, wallet_type='R', value=300)
         self.assertEqual(wallet.value, 300)
         self.assertEqual(wallet.get_wallet_type_display(), 'Real Money EUR')
         self.assertEqual(wallet.user.username, 'John')
@@ -50,3 +50,15 @@ class WallerManagersTest(TestCase):
         check against 4 wallets, because one was created curing user creation
         """
         self.assertEqual(self.user.wallet.bonus().count(), 4)
+
+
+class DepositModelClassTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = UserModel.objects.create_user(username='John', password='secret')
+
+    def test_deposit_object_creation(self):
+        wallet = DepositModel.objects.create(user=self.user, value=300)
+        self.assertEqual(wallet.value, 300)
+        self.assertEqual(wallet.user.username, 'John')

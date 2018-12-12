@@ -11,15 +11,22 @@ from .managers import WalletManager
 UserModel = get_user_model()
 
 
-class WalletModel(models.Model):
+class TimeStampedValueModel(models.Model):
+
+    created = models.DateTimeField(auto_now_add=True)
+    value = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        abstract = True
+
+
+class WalletModel(TimeStampedValueModel):
     """
     Wallet Model class for User
     """
 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='wallet')
     wallet_type = models.CharField(max_length=1, choices=settings.WALLET_TYPE)
-    value = models.PositiveSmallIntegerField(default=0)
-    created = models.DateTimeField(auto_now_add=True)
 
     objects = WalletManager()
 
@@ -34,3 +41,14 @@ class WalletModel(models.Model):
     # def clean(self):
     #     # TODO: put here validation rules for wallet
     #     raise NotImplementedError
+
+
+class DepositModel(TimeStampedValueModel):
+    """
+    Deposit class for registering deposits
+    """
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='deposit')
+
+    class Meta:
+        verbose_name = 'Deposit'
+        verbose_name_plural = 'Deposits'
