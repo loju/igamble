@@ -27,6 +27,10 @@
         <h2>Wallets</h2>
         {% for wallet in user.wallet.all %} <button> {{ wallet }} <br> {{ wallet.created }}</button> {% endfor %}
     </section>
+   <section>
+       <h2>Deposit</h2>
+       <p>{{ bonus_form }}</p>
+   </section>
     {% endif %}
 </body>
 </html>

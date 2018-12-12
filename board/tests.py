@@ -14,4 +14,5 @@ class IndexViewTest(TestCase):
     def test_index_page_returns_correct_template(self):
         request = HttpRequest()
         response = IndexView(request=request)
+        self.assertIn('bonus_form', response.get_context_data().keys())
         self.assertEqual(response.template_name, 'index.html')
