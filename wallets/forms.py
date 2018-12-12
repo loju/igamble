@@ -12,7 +12,3 @@ class DepositForm(ModelForm):
     class Meta:
         model = DepositModel
         fields = ['value']
-
-    def save(self, commit=True):
-        self.instance.user = self.request.user
-        return super().save(commit=commit)

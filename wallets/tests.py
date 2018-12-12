@@ -1,6 +1,7 @@
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.contrib.auth import get_user_model
 
+from .forms import DepositForm
 from .models import DepositModel, WalletModel
 
 UserModel = get_user_model()
@@ -63,8 +64,23 @@ class DepositModelClassTest(TestCase):
         self.assertEqual(wallet.value, 300)
         self.assertEqual(wallet.user.username, 'John')
 
+
 class DepositFormClassTest(TestCase):
 
-    def test_to_implement(self):
-        # TODO: provide more detailed tests
-        raise NotImplementedError
+    def setUp(self):
+        self.request = RequestFactory()
+        self.user = UserModel.objects.create_user(username='John', password='secret')
+        self.request.user = self.user
+
+    def test_valid_data(self):
+        form = DepositForm({
+            'value': 200
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_data(self):
+        form = DepositForm({})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {
+            'value': ['This field is required.'],
+        })

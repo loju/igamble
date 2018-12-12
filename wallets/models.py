@@ -52,3 +52,6 @@ class DepositModel(TimeStampedValueModel):
     class Meta:
         verbose_name = 'Deposit'
         verbose_name_plural = 'Deposits'
+
+    def __str__(self):
+        return 'on: {0} value:{1}'.format(self.created, self.value)

@@ -9,7 +9,7 @@ class IndexViewTest(TestCase):
 
     def test_url_resolves_to_index_view(self):
         index = resolve('/')
-        self.assertIn(IndexView.__name__, index.view_name)
+        self.assertEqual(index.view_name, 'board:index')
 
     def test_index_page_returns_correct_template(self):
         request = HttpRequest()

@@ -29,7 +29,17 @@
     </section>
    <section>
        <h2>Deposit</h2>
-       <p>{{ bonus_form }}</p>
+       <form action="" method="post">
+           {% csrf_token %}
+           {{ bonus_form }}
+           <input type="submit" value="Submit">
+        </form>
+       <h4>Deposit history</h4>
+       <ul>
+           {% for deposit in user.deposit.all %}
+           <li>{{ deposit }}</li>
+           {% endfor %}
+       </ul>
    </section>
     {% endif %}
 </body>
