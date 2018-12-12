@@ -22,6 +22,12 @@ def append_bonus_after_deposit(sender, instance, created, **kwargs):
     """
     if created:
         user = instance.user
+        # update real wallet
+        oldest_real_wallet = user.wallet.real().last()
+        oldest_real_wallet.value += instance.value
+        oldest_real_wallet.save()
+
+        # assign bonus if any
         bonus = user.bonusfordepositmodel
         if instance.value > bonus.threshold:
             oldest_bonus_wallet = user.wallet.bonus().last()

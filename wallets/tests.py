@@ -67,10 +67,12 @@ class DepositModelClassTest(TestCase):
         self.assertEqual(deposit.value, 300)
         self.assertEqual(deposit.user.username, 'John')
 
-    def test_deposit_bonus(self):
+    def test_wallets_after_deposit(self):
         DepositModel.objects.create(user=self.user, value=300)
-        oldest_deposit_wallet = self.user.wallet.bonus().last()
-        self.assertEqual(oldest_deposit_wallet.value, 20)
+        oldest_real_wallet = self.user.wallet.real().last()
+        oldest_bonus_wallet = self.user.wallet.bonus().last()
+        self.assertEqual(oldest_real_wallet.value, 300)
+        self.assertEqual(oldest_bonus_wallet.value, 20)
 
 
 class DepositFormClassTest(TestCase):
