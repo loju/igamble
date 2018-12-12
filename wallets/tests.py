@@ -1,3 +1,6 @@
+"""
+Test against wallet module classes
+"""
 from django.test import RequestFactory, TestCase
 from django.contrib.auth import get_user_model
 
@@ -60,9 +63,14 @@ class DepositModelClassTest(TestCase):
         cls.user = UserModel.objects.create_user(username='John', password='secret')
 
     def test_deposit_object_creation(self):
-        wallet = DepositModel.objects.create(user=self.user, value=300)
-        self.assertEqual(wallet.value, 300)
-        self.assertEqual(wallet.user.username, 'John')
+        deposit = DepositModel.objects.create(user=self.user, value=300)
+        self.assertEqual(deposit.value, 300)
+        self.assertEqual(deposit.user.username, 'John')
+
+    def test_deposit_bonus(self):
+        DepositModel.objects.create(user=self.user, value=300)
+        oldest_deposit_wallet = self.user.wallet.bonus().last()
+        self.assertEqual(oldest_deposit_wallet.value, 20)
 
 
 class DepositFormClassTest(TestCase):
