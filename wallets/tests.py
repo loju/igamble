@@ -62,3 +62,9 @@ class DepositModelClassTest(TestCase):
         wallet = DepositModel.objects.create(user=self.user, value=300)
         self.assertEqual(wallet.value, 300)
         self.assertEqual(wallet.user.username, 'John')
+
+class DepositFormClassTest(TestCase):
+
+    def test_to_implement(self):
+        # TODO: provide more detailed tests
+        raise NotImplementedError
