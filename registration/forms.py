@@ -1,3 +1,6 @@
+"""
+Custom form for user creation
+"""
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 

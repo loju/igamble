@@ -33,7 +33,7 @@ class WalletModel(TimeStampedValueModel):
     objects = WalletManager()
 
     class Meta:
-        ordering = ['-wallet_type', 'created']
+        ordering = ['-wallet_type', '-created']
         verbose_name = 'Wallet'
         verbose_name_plural = 'Wallets'
 

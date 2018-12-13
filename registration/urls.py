@@ -1,4 +1,3 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import include, path
 from django.views.generic.edit import CreateView
 

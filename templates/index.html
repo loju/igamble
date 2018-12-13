@@ -25,7 +25,11 @@
    {% if user.is_authenticated %}
     <section>
         <h2>Wallets</h2>
-        <p>Active wallet: {{ user.get_active_wallet }} created at: {{ user.get_active_wallet.created }}</p>
+        {% if user.has_active_wallet %}
+            <p>Active wallet: {{ user.get_active_wallet }} created at: {{ user.get_active_wallet.created }}</p>
+        {% else %}
+            <p>You have no active wallets</p>
+        {% endif %}
         <p>{% for wallet in user.wallet.all %} <button> {{ wallet }} <br> {{ wallet.created }}</button> {% endfor %}</p>
     </section>
    <section>

@@ -7,6 +7,10 @@ from django.db import models
 
 class User(AbstractUser):
 
+    @property
+    def has_active_wallet(self):
+        return self.get_active_wallet()
+
     def get_active_wallet(self):
         oldest_real_wallet = self.wallet.oldest_real()
         oldest_bonus_wallet = self.wallet.oldest_bonus()
@@ -14,8 +18,7 @@ class User(AbstractUser):
             return oldest_real_wallet
         elif not oldest_bonus_wallet.is_empty():
             return oldest_bonus_wallet
-        else:
-            return oldest_real_wallet
+        return False
 
 
 class BonusModel(models.Model):
