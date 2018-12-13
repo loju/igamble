@@ -27,6 +27,11 @@ class IndexView(FormMixin, TemplateView):
         else:
             return self.form_invalid(form)
 
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('spin'):
+            raise NotImplementedError('Implement spin function')
+        return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.save()

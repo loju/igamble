@@ -28,6 +28,13 @@
         {% for wallet in user.wallet.all %} <button> {{ wallet }} <br> {{ wallet.created }}</button> {% endfor %}
     </section>
    <section>
+        <h2>Bets</h2>
+        <form action="" method="GET">
+            <input type="submit" name="spin" value="Submit" />
+        </form>
+   </section>
+
+   <section>
        <h2>Deposit</h2>
        <form action="" method="post">
            {% csrf_token %}
