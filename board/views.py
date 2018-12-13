@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
 from wallets.forms import DepositForm
+
+import random
 
 
 class IndexView(FormMixin, TemplateView):
@@ -29,7 +32,8 @@ class IndexView(FormMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.GET.get('spin'):
-            raise NotImplementedError('Implement spin function')
+            active_wallet = self.request.user.get_active_wallet()
+            active_wallet.spin()
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):

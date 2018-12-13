@@ -1,10 +1,10 @@
 """
 Wallet Models for User
 """
-
+import random
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 
 from .contextmanagers import object_saver
@@ -48,6 +48,13 @@ class WalletModel(TimeStampedValueModel):
         if self.value > 0:
             return False
         return True
+
+    def spin(self):
+        choice = bool(random.getrandbits(1))
+        if choice:
+            self.update_value(settings.BET_VALUE)
+        else:
+            self.update_value(settings.BET_VALUE * -1)
 
 
 class DepositModel(TimeStampedValueModel):
