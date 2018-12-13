@@ -1,12 +1,12 @@
-from django.conf import settings
+"""
+Views for board
+"""
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
 from wallets.forms import DepositForm
-
-import random
 
 
 class IndexView(FormMixin, TemplateView):

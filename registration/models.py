@@ -12,11 +12,11 @@ class User(AbstractUser):
         return self.get_active_wallet()
 
     def get_active_wallet(self):
-        oldest_real_wallet = self.wallet.oldest_real()
-        oldest_bonus_wallet = self.wallet.oldest_bonus()
-        if not oldest_real_wallet.is_empty():
+        oldest_real_wallet = self.wallet.oldest_real_not_empty()
+        oldest_bonus_wallet = self.wallet.oldest_bonus_not_empty()
+        if oldest_real_wallet:
             return oldest_real_wallet
-        elif not oldest_bonus_wallet.is_empty():
+        elif oldest_bonus_wallet:
             return oldest_bonus_wallet
         return False
 

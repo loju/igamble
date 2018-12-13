@@ -129,4 +129,4 @@ WALLET_TYPE = (
     ('R', 'Real Money EUR'),
     ('B', 'Bonus Money BNS'),
 )
-BET_VALUE = 2
+BET_VALUE = 50

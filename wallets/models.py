@@ -43,6 +43,8 @@ class WalletModel(TimeStampedValueModel):
     def update_value(self, value):
         with object_saver(self):
             self.value += value
+            if self.value <= 0:
+                self.value = 0
 
     def is_empty(self):
         if self.value > 0:
@@ -50,11 +52,12 @@ class WalletModel(TimeStampedValueModel):
         return True
 
     def spin(self):
-        choice = bool(random.getrandbits(1))
-        if choice:
-            self.update_value(settings.BET_VALUE)
-        else:
-            self.update_value(settings.BET_VALUE * -1)
+        if not self.is_empty():
+            choice = bool(random.getrandbits(1))
+            if choice:
+                self.update_value(settings.BET_VALUE)
+            else:
+                self.update_value(settings.BET_VALUE * -1)
 
 
 class DepositModel(TimeStampedValueModel):
