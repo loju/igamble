@@ -30,6 +30,7 @@ class WalletModel(TimeStampedValueModel):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='wallet')
     wallet_type = models.CharField(max_length=1, choices=settings.WALLET_TYPE)
     spent = models.PositiveSmallIntegerField(default=0)
+    used = models.BooleanField(default=False)
 
     objects = WalletManager()
 
