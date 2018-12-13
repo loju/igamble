@@ -70,7 +70,7 @@ class DepositModelClassTest(TestCase):
     def test_wallets_after_deposit(self):
         DepositModel.objects.create(user=self.user, value=300)
         oldest_real_wallet = self.user.wallet.oldest_real()
-        oldest_bonus_wallet = self.user.wallet.oldest_bonus()
+        oldest_bonus_wallet = self.user.wallet.oldest_unused_bonus()
         self.assertEqual(oldest_real_wallet.value, 300)
         self.assertEqual(oldest_bonus_wallet.value, 20)
 

@@ -41,11 +41,17 @@ class WalletManager(models.Manager):
     def oldest_bonus(self):
         return self.bonus().last()
 
+    def unused_bonus(self):
+        return self.bonus().unused()
+
     def oldest_unused_bonus(self):
-        return self.bonus().unused().last()
+        return self.unused_bonus().last()
 
     def oldest_real_not_empty(self):
         return self.real().not_empty().last()
 
     def oldest_bonus_not_empty(self):
         return self.bonus().not_empty().last()
+
+    def oldest_unused_not_empty_bonus(self):
+        return self.unused_bonus().not_empty().last()

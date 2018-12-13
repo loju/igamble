@@ -13,7 +13,7 @@ class User(AbstractUser):
 
     def get_active_wallet(self):
         oldest_real_wallet = self.wallet.oldest_real_not_empty()
-        oldest_bonus_wallet = self.wallet.oldest_bonus_not_empty()
+        oldest_bonus_wallet = self.wallet.oldest_unused_not_empty_bonus()
         if oldest_real_wallet:
             return oldest_real_wallet
         elif oldest_bonus_wallet:
