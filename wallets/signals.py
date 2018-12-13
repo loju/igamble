@@ -18,7 +18,7 @@ def append_bonus_after_deposit(sender, instance, created, **kwargs):
     :param instance:
     :param created:
     :param kwargs:
-    :return:
+    Update wallet after deposit action.
     """
     if created:
         user = instance.user
