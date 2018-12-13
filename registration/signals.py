@@ -44,8 +44,7 @@ def append_bonus_after_login(sender, user, request, **kwargs):
     """
     oldest_real_wallet = user.wallet.real().last()
     bonus_login_value = user.bonusforloginmodel.value
-    oldest_real_wallet.value += bonus_login_value
-    oldest_real_wallet.save()
+    oldest_real_wallet.update_value(bonus_login_value)
 
 
 user_logged_in.connect(append_bonus_after_login)
