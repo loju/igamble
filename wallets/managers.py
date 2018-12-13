@@ -13,7 +13,7 @@ class TypeQuerySet(models.QuerySet):
         return self.filter(value__gt=0)
 
     def unused(self):
-        return self.exclude(spent__gt=0)
+        return self.filter(used=False)
 
     def real(self):
         return self.filter(wallet_type='R')
