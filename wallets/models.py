@@ -29,6 +29,7 @@ class WalletModel(TimeStampedValueModel):
 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='wallet')
     wallet_type = models.CharField(max_length=1, choices=settings.WALLET_TYPE)
+    spent = models.PositiveSmallIntegerField(default=0)
 
     objects = WalletManager()
 
@@ -45,6 +46,14 @@ class WalletModel(TimeStampedValueModel):
             self.value += value
             if self.value <= 0:
                 self.value = 0
+
+    def update_spent(self, value):
+        with object_saver(self):
+            self.spent += value
+
+    def update_wallet(self, value):
+        self.update_value(value)
+        self.update_spent(value)
 
     def is_empty(self):
         if self.value > 0:
