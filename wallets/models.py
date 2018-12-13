@@ -53,7 +53,7 @@ class WalletModel(TimeStampedValueModel):
 
     def update_wallet(self, value):
         self.update_value(value)
-        self.update_spent(value)
+        self.update_spent(abs(value))
 
     def is_empty(self):
         if self.value > 0:
@@ -64,9 +64,9 @@ class WalletModel(TimeStampedValueModel):
         if not self.is_empty():
             choice = bool(random.getrandbits(1))
             if choice:
-                self.update_value(settings.BET_VALUE)
+                self.update_wallet(settings.BET_VALUE)
             else:
-                self.update_value(settings.BET_VALUE * -1)
+                self.update_wallet(settings.BET_VALUE * -1)
 
 
 class DepositModel(TimeStampedValueModel):

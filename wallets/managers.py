@@ -12,6 +12,9 @@ class TypeQuerySet(models.QuerySet):
     def not_empty(self):
         return self.filter(value__gt=0)
 
+    def unused(self):
+        return self.exclude(spent__gt=0)
+
     def real(self):
         return self.filter(wallet_type='R')
 
@@ -37,6 +40,9 @@ class WalletManager(models.Manager):
 
     def oldest_bonus(self):
         return self.bonus().last()
+
+    def oldest_unused_bonus(self):
+        return self.bonus().unused().last()
 
     def oldest_real_not_empty(self):
         return self.real().not_empty().last()
