@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.core.validators import MinValueValidator
 
+from .contextmanagers import object_saver
 from .managers import WalletManager
 
 UserModel = get_user_model()
@@ -40,8 +41,8 @@ class WalletModel(TimeStampedValueModel):
         return '{0}: {1}'.format(self.get_wallet_type_display(), self.value)
 
     def update_value(self, value):
-        self.value += value
-        self.save()
+        with object_saver(self):
+            self.value += value
 
 
 class DepositModel(TimeStampedValueModel):
