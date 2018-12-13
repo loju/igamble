@@ -39,9 +39,9 @@ class WalletModel(TimeStampedValueModel):
     def __str__(self):
         return '{0}: {1}'.format(self.get_wallet_type_display(), self.value)
 
-    # def clean(self):
-    #     # TODO: put here validation rules for wallet
-    #     raise NotImplementedError
+    def update_value(self, value):
+        self.value += value
+        self.save()
 
 
 class DepositModel(TimeStampedValueModel):
