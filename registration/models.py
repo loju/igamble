@@ -6,7 +6,16 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+
+    def get_active_wallet(self):
+        oldest_real_wallet = self.wallet.oldest_real()
+        oldest_bonus_wallet = self.wallet.oldest_bonus()
+        if not oldest_real_wallet.is_empty():
+            return oldest_real_wallet
+        elif not oldest_bonus_wallet.is_empty():
+            return oldest_bonus_wallet
+        else:
+            return oldest_real_wallet
 
 
 class BonusModel(models.Model):

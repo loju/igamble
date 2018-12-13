@@ -42,7 +42,7 @@ def append_bonus_after_login(sender, user, request, **kwargs):
     :param kwargs:
     Within every user login value from BonusForLoginModel will be added to user wallet
     """
-    oldest_real_wallet = user.wallet.real().last()
+    oldest_real_wallet = user.wallet.oldest_real()
     bonus_login_value = user.bonusforloginmodel.value
     oldest_real_wallet.update_value(bonus_login_value)
 

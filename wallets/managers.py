@@ -28,3 +28,9 @@ class WalletManager(models.Manager):
 
     def bonus(self):
         return self.get_queryset().bonus()
+
+    def oldest_real(self):
+        return self.real().last()
+
+    def oldest_bonus(self):
+        return self.bonus().last()

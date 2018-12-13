@@ -44,6 +44,11 @@ class WalletModel(TimeStampedValueModel):
         with object_saver(self):
             self.value += value
 
+    def is_empty(self):
+        if self.value > 0:
+            return False
+        return True
+
 
 class DepositModel(TimeStampedValueModel):
     """
