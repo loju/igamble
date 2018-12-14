@@ -3,4 +3,3 @@ __pycache__/
 *.xml
 *.json
 *.py[cod]
-db.sqlite3
