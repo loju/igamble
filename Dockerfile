@@ -1,0 +1,8 @@
+FROM python:3
+ENV PYTHONUNBUFFERED 1
+ENV SRVHOME=/code
+
+RUN mkdir $SRVHOME
+WORKDIR $SRVHOME
+ADD . $SRVHOME
+RUN pip install -r requirements.txt

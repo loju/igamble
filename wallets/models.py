@@ -13,6 +13,19 @@ from .managers import WalletManager
 UserModel = get_user_model()
 
 
+def transfer_money(bonus_wallet, real_wallet):
+    """
+    transfer money from Bonus wallet to Real
+    """
+    if not bonus_wallet and not real_wallet:
+        return
+    with object_saver(real_wallet):
+        real_wallet.value += bonus_wallet.value
+
+    with object_saver(bonus_wallet):
+        bonus_wallet.value = 0
+
+
 class TimeStampedValueModel(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)

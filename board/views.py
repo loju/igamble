@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
 from wallets.forms import DepositForm
-from wallets.models import WalletModel
+from wallets.models import WalletModel, transfer_money
 
 
 class IndexView(FormMixin, TemplateView):
@@ -43,6 +43,9 @@ class IndexView(FormMixin, TemplateView):
             return self.form_invalid(form)
 
     def get(self, request, *args, **kwargs):
+        """
+        needs refactor
+        """
         if self.request.user.is_authenticated:
             active_wallet = self.request.user.get_active_wallet()
         try:
@@ -53,6 +56,16 @@ class IndexView(FormMixin, TemplateView):
         if request.GET.get('spin'):
             active_wallet = self.request.user.get_active_wallet()
             active_wallet.spin()
+        if request.GET.get('transfer'):
+            oldest_real_wallet = self.request.user.wallet.oldest_real()
+            try:
+                oldest_bonus_wallet = self.request.user.wallet.oldest_unused_bonus_not_empty()
+                transfer_money(bonus_wallet=oldest_bonus_wallet, real_wallet=oldest_real_wallet)
+                oldest_bonus_wallet.set_used()
+            except Exception:
+                pass
+
+
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):

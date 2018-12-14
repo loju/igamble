@@ -25,7 +25,12 @@
    {% if user.is_authenticated %}
     <section>
         <h2>Wallets</h2>
-        {% if user.has_accept_for_transfer %}<h3><button>Transfer money</button></h3>{% endif %}
+        {% if user.has_accept_for_transfer %}
+            <h3>Transfer money</h3>
+            <form action="" method="GET">
+                <input type="submit" name="transfer" value="Transfer" {% if not user.has_accept_for_transfer %}disabled="disabled"{% endif %}/>
+            </form>
+        {% endif %}
         {% if user.has_active_wallet %}
             <p>Active wallet: {{ user.get_active_wallet }} created at: {{ user.get_active_wallet.created }}</p>
         {% else %}

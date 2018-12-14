@@ -26,14 +26,19 @@ class User(AbstractUser):
         check whether we can transfer money from Bonus to Real wallet
         """
         factor = self.wagermodel.value
-        current_wallet = self.get_active_wallet()
+        try:
+            current_wallet = self.get_active_wallet()
+            current_wallet_spent = current_wallet.spent
+        except Exception:
+            current_wallet_spent = 0
+
         try:
             last_deposit = current_wallet.wallet_deposit.first()
             last_deposit_value = last_deposit.value
         except Exception:
             last_deposit_value = 0
 
-        if (last_deposit_value * factor) < current_wallet.spent:
+        if (last_deposit_value * factor) < current_wallet_spent:
             return True
         return False
 
