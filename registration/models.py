@@ -36,7 +36,7 @@ class User(AbstractUser):
             last_deposit = current_wallet.wallet_deposit.first()
             last_deposit_value = last_deposit.value
         except Exception:
-            last_deposit_value = 0
+            return False
 
         if (last_deposit_value * factor) < current_wallet_spent:
             return True

@@ -16,4 +16,6 @@ We can transfer money from bonus wallet to real (oldest wallet has priority in b
 factor * last deposit < spent money from  current real wallet
 
 Factor could be defined in (Admin -> Wager models)
+
+You can run this app in docker container: `docker-compose up`
   
