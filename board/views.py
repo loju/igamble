@@ -57,5 +57,6 @@ class IndexView(FormMixin, TemplateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.wallet = self.request.user.get_active_wallet()
         form.save()
         return redirect('board:index')

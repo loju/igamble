@@ -85,6 +85,7 @@ class DepositModel(TimeStampedValueModel):
     Deposit class for registering deposits
     """
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='deposit')
+    wallet = models.ForeignKey(WalletModel, on_delete=models.CASCADE, related_name='wallet_deposit')
 
     class Meta:
         ordering = ['-created']

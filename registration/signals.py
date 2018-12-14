@@ -7,7 +7,7 @@ from django.contrib.auth.signals import user_logged_in
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import BonusForLoginModel, BonusForDepositModel
+from .models import BonusForLoginModel, BonusForDepositModel, WagerModel
 
 UserModel = get_user_model()
 
@@ -32,7 +32,7 @@ def user_creation_handler(sender, instance, created, **kwargs):
         # bonuses creation (consider annyoing library use)
         BonusForLoginModel.objects.create(user=instance, value=100)
         BonusForDepositModel.objects.create(user=instance, value=20, threshold=100)
-
+        WagerModel.objects.create(user=instance, value=20)
 
 def append_bonus_after_login(sender, user, request, **kwargs):
     """

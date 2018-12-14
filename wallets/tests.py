@@ -63,14 +63,15 @@ class DepositModelClassTest(TestCase):
         cls.user = UserModel.objects.create_user(username='John', password='secret')
 
     def test_deposit_object_creation(self):
+        oldest_real_wallet = self.user.wallet.oldest_real()
         deposit = DepositModel.objects.create(user=self.user, value=300)
         self.assertEqual(deposit.value, 300)
         self.assertEqual(deposit.user.username, 'John')
 
     def test_wallets_after_deposit(self):
-        DepositModel.objects.create(user=self.user, value=300)
         oldest_real_wallet = self.user.wallet.oldest_real()
         oldest_bonus_wallet = self.user.wallet.oldest_unused_bonus()
+        DepositModel.objects.create(user=self.user, value=300, wallet=oldest_real_wallet)
         self.assertEqual(oldest_real_wallet.value, 300)
         self.assertEqual(oldest_bonus_wallet.value, 20)
 
