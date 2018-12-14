@@ -17,5 +17,4 @@ factor * last deposit < spent money from  current real wallet
 
 Factor could be defined in (Admin -> Wager models)
 
-You can run this app in docker container: `docker-compose up`
-  
+You can run this app in docker container: `docker-compose up` with user `user/user`
