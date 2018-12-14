@@ -17,6 +17,7 @@ class User(AbstractUser):
         if oldest_real_wallet:
             return oldest_real_wallet
         elif oldest_bonus_wallet:
+            # oldest_bonus_wallet.set_used()
             return oldest_bonus_wallet
         return False
 

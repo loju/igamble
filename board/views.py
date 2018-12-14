@@ -2,11 +2,12 @@
 Views for board
 """
 from django.http import HttpResponseForbidden
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
 from wallets.forms import DepositForm
+from wallets.models import WalletModel
 
 
 class IndexView(FormMixin, TemplateView):
@@ -19,6 +20,17 @@ class IndexView(FormMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['bonus_form'] = self.get_form()
+        try:
+            active_wallet_id = self.request.user.get_active_wallet().id
+        except Exception:
+            active_wallet_id = None
+
+        prev_wallet_id = self.request.session['active_wallet_id']
+
+        if prev_wallet_id != active_wallet_id:
+            prev_wallet = get_object_or_404(WalletModel, id=prev_wallet_id)
+            prev_wallet.set_used()
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -31,6 +43,12 @@ class IndexView(FormMixin, TemplateView):
             return self.form_invalid(form)
 
     def get(self, request, *args, **kwargs):
+        active_wallet = self.request.user.get_active_wallet()
+        try:
+            request.session['active_wallet_id'] = active_wallet.id
+        except Exception:
+            request.session['active_wallet_id'] = None
+
         if request.GET.get('spin'):
             active_wallet = self.request.user.get_active_wallet()
             active_wallet.spin()

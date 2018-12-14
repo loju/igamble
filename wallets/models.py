@@ -66,6 +66,7 @@ class WalletModel(TimeStampedValueModel):
         return True
 
     def spin(self):
+        # consider to separate this method
         if not self.is_empty():
             choice = bool(random.getrandbits(1))
             if choice:
