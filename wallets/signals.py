@@ -11,6 +11,15 @@ from .models import DepositModel
 UserModel = get_user_model()
 
 
+def update_wallet(user, bonus):
+    oldest_bonus_wallet, created = user.wallet.unused_bonus().get_or_create(
+        wallet_type='B', user=user
+    )
+    oldest_bonus_wallet.update_value(bonus.value)
+
+    return oldest_bonus_wallet, created
+
+
 @receiver(post_save, sender=DepositModel)
 def append_bonus_after_deposit(sender, instance, created, **kwargs):
     """
@@ -29,7 +38,4 @@ def append_bonus_after_deposit(sender, instance, created, **kwargs):
         # assign bonus if any
         bonus = user.bonusfordepositmodel
         if instance.value > bonus.threshold:
-            oldest_bonus_wallet, created = user.wallet.unused_not_spent_bonus().get_or_create(
-                wallet_type='B', user=user
-            )
-            oldest_bonus_wallet.update_value(bonus.value)
+            update_wallet(user, bonus)

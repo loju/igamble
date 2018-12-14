@@ -25,7 +25,7 @@ class IndexView(FormMixin, TemplateView):
         except Exception:
             active_wallet_id = None
 
-        prev_wallet_id = self.request.session['active_wallet_id']
+        prev_wallet_id = self.request.session.get('active_wallet_id')
 
         if prev_wallet_id != active_wallet_id:
             prev_wallet = get_object_or_404(WalletModel, id=prev_wallet_id)
@@ -43,7 +43,8 @@ class IndexView(FormMixin, TemplateView):
             return self.form_invalid(form)
 
     def get(self, request, *args, **kwargs):
-        active_wallet = self.request.user.get_active_wallet()
+        if self.request.user.is_authenticated:
+            active_wallet = self.request.user.get_active_wallet()
         try:
             request.session['active_wallet_id'] = active_wallet.id
         except Exception:

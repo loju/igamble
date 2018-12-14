@@ -52,6 +52,11 @@ class WalletModel(TimeStampedValueModel):
         with object_saver(self):
             self.spent += value
 
+    def has_spent(self):
+        if self.spent > 0:
+            return True
+        return False
+
     def set_used(self):
         with object_saver(self):
             self.used = True
